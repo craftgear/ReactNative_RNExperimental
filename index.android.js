@@ -1,52 +1,75 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 
 export default class RNExperimental extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+      <Home />
     );
   }
 }
 
+const Button = ({title, onPress}) => (
+  <TouchableHighlight
+    underlayColor='#EFEFEF'
+    onPress={onPress}
+    style={styles.button}
+  >
+    <Text>{title}</Text>
+  </TouchableHighlight>
+);
+
+const Home = ({ onPress }) => (
+  <View style={styles.container}>
+    <Text style={styles.title}>Hello From Home</Text>
+    <Button onPress={onPress} title='Go To Next Scene' />
+  </View>
+);
+
+const About = ({ onPress, goBack }) => (
+  <View style={styles.container}>
+    <Text style={styles.title}>Hello From About</Text>
+    <Button onPress={onPress} title='Go To Next Scene' />
+    <Button onPress={goBack} title='Go Back'/>
+  </View>
+);
+
+const Contact = ({ goBack }) => (
+  <View style={styles.container}>
+    <Text style={styles.title}>Hello From Contact</Text>
+    <Button title='Go Back' onPress={goBack} />
+  </View>
+);
+
 const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: '#F5FCFF',
+    flex: 1,
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
+  title: {
+    fontSize: 40,
+    marginTop: 200,
     textAlign: 'center',
-    margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  button: {
+    height: 70,
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor: '#EDEDED'
   },
 });
 
