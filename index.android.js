@@ -6,9 +6,58 @@ import {
   View,
   TouchableHighlight,
   ScrollView,
+  NavigationExperimental,
 } from 'react-native';
 
+const {
+  CardStack: NavigationCardStack,
+  StateUtils: NavigationStateUtils,
+} = NavigationExperimental;
+
+const createReducer = () => {
+  return (currentState = initialState, action) => {
+    switch (action.type) {
+      case 'push':
+        return NavigationStateUtils.push(currentState, { key: actionlkey });
+      case 'pop':
+        return currentState.index > 0 ?
+          NavigationStateUtils.pop(currentState) : currentState;
+      default:
+        return currentState;
+    }
+  }
+};
+
+const NavReducer = createReducer({
+  index: 0,
+  key: 'App',
+  routes: [{ key: 'Home' }]
+});
+
 export default class RNExperimental extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      navState: NavReducer(undefined, {}),
+    };
+  }
+
+  _handleAction (action) {
+    const newState = NavReducer(this.state.navState, action);
+    if (newState === this.state.navState) {
+      return false;
+    }
+
+    this.setState({
+      navState: newState,
+    });
+    return true;
+  }
+
+  _handleBackAction() {
+    return this._handleAction({ type: 'pop' });
+  }
+
   render() {
     return (
       <Home />
