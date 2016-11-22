@@ -14,11 +14,11 @@ const {
   StateUtils: NavigationStateUtils,
 } = NavigationExperimental;
 
-const createReducer = () => {
+const createReducer = (initialState) => {
   return (currentState = initialState, action) => {
     switch (action.type) {
       case 'push':
-        return NavigationStateUtils.push(currentState, { key: actionlkey });
+        return NavigationStateUtils.push(currentState, { key: action.key });
       case 'pop':
         return currentState.index > 0 ?
           NavigationStateUtils.pop(currentState) : currentState;
